@@ -32,7 +32,6 @@ def main():
 
     ## sort the data and print in order of freed up space
     sortedTable = sorted(svnRepoSizes, key=SvnRepoSize.size_difference)
-    totalFreedSpaceInBytes = 0
     for e in sortedTable:
         totalFreedSpaceInBytes += e.size_difference
         Log("{:8} -> {:8} = {:8} {}".format(
@@ -41,6 +40,9 @@ def main():
             humanReadableSize(e.size_difference),
             e.path
         ))
+
+    ## log the total freed space as well
+    totalFreedSpaceInBytes = sum([e.size_difference() for e in svnRepoSizes])
     Log("total freed space: {}".format(humanReadableSize(totalFreedSpaceInBytes)))
     Log("")
 
