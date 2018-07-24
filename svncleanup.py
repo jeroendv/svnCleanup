@@ -61,7 +61,7 @@ def Log(str):
 class DirSizeError(Exception): pass
 
 
-def dir_size(start, follow_links=0, start_depth=0, max_depth=0, skip_errs=0):
+def dir_size(start, follow_links=0, skip_errs=0):
     """compute a folder size in bytes
     
     https://www.safaribooksonline.com/library/view/python-cookbook/0596001673/ch04s24.html
@@ -88,10 +88,8 @@ def dir_size(start, follow_links=0, start_depth=0, max_depth=0, skip_errs=0):
         total += stats[6]
         # recursive descent if warranted
         if isdir(path) and (follow_links or not islink(path)):
-            bytes = dir_size(path, follow_links, start_depth+1, max_depth)
+            bytes = dir_size(path, follow_links)
             total += bytes
-            if max_depth and (start_depth < max_depth):
-                print_path(path, bytes)
     return total
 
 def humanReadableSize(byteSize):
