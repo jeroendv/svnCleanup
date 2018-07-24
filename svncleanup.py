@@ -14,21 +14,18 @@ def main():
 
     Log(str(datetime.datetime.now()))
 
-    byteSizes_before = []
-    byteSizes_after = []
-    paths = []
+    svnRepoSizes = []
     ignoreFolders = ['.svn', '.git']
     for (root, dirs, files) in os.walk('.'):
         # perform cleanup for each svn checkout
         if '.svn' in dirs:
             svnDir = os.path.join(root,'.svn')
 
-            byteSizes_before.append(dir_size(svnDir))
-
+            byteSize_before = dir_size(svnDir)
             cleanSvnWcRepo(root)
+            byteSize_after = dir_size(svnDir)
 
-            byteSizes_after.append(dir_size(svnDir))
-            paths.append(svnDir)
+            svnRepoSizes.append(SvnRepoSize(svnDir, byteSize_before, byteSize_after))
 
         # don't walk into ignored folders
         for f in ignoreFolders:
@@ -36,20 +33,28 @@ def main():
                 dirs.remove(f) 
 
     ## sort the data and print in order of freed up space
-    table = zip(byteSizes_before, byteSizes_after, paths)
-    sortedTable = sorted(table, key=lambda e: e[1]-e[0])
+    sortedTable = sorted(svnRepoSizes, key=SvnRepoSize.size_difference)
     totalFreedSpaceInBytes = 0
-    for (b,a,p) in sortedTable:
-        sizeDiffBytes = a-b
-        totalFreedSpaceInBytes += sizeDiffBytes
+    for e in sortedTable:
+        totalFreedSpaceInBytes += e.size_difference
         Log("{:8} -> {:8} = {:8} {}".format(
-            humanReadableSize(b),
-            humanReadableSize(a),
-            humanReadableSize(sizeDiffBytes),
-            p
+            humanReadableSize(e.bytes_before),
+            humanReadableSize(e.bytes_after),
+            humanReadableSize(e.size_difference),
+            e.path
         ))
     Log("total freed space: {}".format(humanReadableSize(totalFreedSpaceInBytes)))
     Log("")
+
+class SvnRepoSize:
+    """track size of a .svn folder before and after the svn cleanup"""
+    def __init__(self, path, bytes_before, bytes_after):
+        self.path = path
+        self.bytes_before = bytes_before
+        self.bytes_after = bytes_after
+
+    def size_difference(self):
+        return self.bytes_after - self.bytes_before
 
 def Log(str):
     """write `str` to both stdout and append it to a file"""
