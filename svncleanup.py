@@ -15,7 +15,7 @@ def main():
     Log(str(datetime.datetime.now()))
 
     svnRepoSizes = []
-    ignoreFolders = ['.svn', '.git']
+    ignoredFolders = ['.svn', '.git']
     for (root, dirs, files) in os.walk('.'):
         # perform cleanup for each svn checkout
         if '.svn' in dirs:
@@ -28,9 +28,7 @@ def main():
             svnRepoSizes.append(SvnRepoSize(svnDir, byteSize_before, byteSize_after))
 
         # don't walk into ignored folders
-        for f in ignoreFolders:
-            if (f in dirs):
-                dirs.remove(f) 
+        dirs = filter(lambda e: e not in ignoredFolders, dirs)
 
     ## sort the data and print in order of freed up space
     sortedTable = sorted(svnRepoSizes, key=SvnRepoSize.size_difference)
