@@ -9,9 +9,40 @@ import os
 from os.path import*
 import subprocess
 import datetime
+import argparse
+import sys
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="""Recursively invode 'svn cleanup' on all svn WC in a directory tree.
+    Appending info to `svncleanup.log`""",)
+
+    parser.add_argument('path'
+                    , help="dir tree root path (defaults to cwd)"
+                    , nargs="?"
+                    , default=".")
+
+    return parser.parse_args()
+
 
 def main():
+    args = parse_arguments()
 
+    # verify is path points to directory
+    if not os.path.isdir(args.path):
+        print("folder does not exists: "+args.path)
+        sys.exit(-1)
+
+    # excaption safety
+    originalDir = os.getcwd()
+    try:
+        os.chdir(args.path)
+        print("Dir Tree Root: "+ os.getcwd())
+        CleanDirTree()
+    finally:
+        os.chdir(originalDir)
+
+
+def CleanDirTree():
     Log(str(datetime.datetime.now()))
 
     svnRepoSizes = []
