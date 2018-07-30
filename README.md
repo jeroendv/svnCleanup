@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/jeroendv/svnCleanup.svg?branch=master)](https://travis-ci.com/jeroendv/svnCleanup)
+
 # svnCleanup
 
 Free disk space by recursive finding all svn working copies in the current folder and clean them.
