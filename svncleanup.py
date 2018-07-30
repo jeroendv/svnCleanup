@@ -31,18 +31,16 @@ def main():
         dirs = filter(lambda e: e not in ignoredFolders, dirs)
 
     ## sort the data and print in order of freed up space
-    sortedTable = sorted(svnRepoSizes, key=SvnRepoSize.size_difference)
-    for e in sortedTable:
-        totalFreedSpaceInBytes += e.size_difference
+    for e in sorted(svnRepoSizes, key=SvnRepoSize.size_difference):
         Log("{:8} -> {:8} = {:8} {}".format(
             humanReadableSize(e.bytes_before),
             humanReadableSize(e.bytes_after),
-            humanReadableSize(e.size_difference),
+            humanReadableSize(e.size_difference()),
             e.path
         ))
 
     ## log the total freed space as well
-    totalFreedSpaceInBytes = sum([e.size_difference() for e in svnRepoSizes])
+    totalFreedSpaceInBytes = 0 + sum([e.size_difference() for e in svnRepoSizes])
     Log("total freed space: {}".format(humanReadableSize(totalFreedSpaceInBytes)))
     Log("")
 
