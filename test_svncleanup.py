@@ -4,12 +4,14 @@ import svncleanup
 import sys
 
 def test(tmpdir):
-    print("tmpdir: " + str(tmpdir))
+    tmpdir = str(tmpdir)
+    print("tmpdir: " + tmpdir)
     print("tmpdir is dir :" + str(os.path.isdir(tmpdir)))
     print("pwd: " + os.getcwd())
 
 
 def test_svnclenaupModuleInvocation(tmpdir):
+    tmpdir = str(tmpdir)
     os.chdir(tmpdir)
 
     # set cli arg and invode script main
