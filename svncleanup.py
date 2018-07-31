@@ -141,16 +141,21 @@ def humanReadableSize(byteSize):
 def cleanSvnWcRepo(svnWC):
     """clean the svn WC Repo
     """
+    assert os.path.isdir(svnWC)
     pwd = os.getcwd()
     try:
-        # print("$ cd "+svnWC, flush=True)
         os.chdir(svnWC)
+        cmd = ['svn', 'cleanup', '--vacuum-pristines']
+        exitCode = subprocess.call(cmd) 
 
-        cmd = ['svn', 'cleanup']
-        # print("$ "+" ".join(cmd), flush=True)
-        # subprocess.check_call(cmd) 
-
-
+        # fallback to regular cleanup if call failed
+        if exitCode == 1:
+            cmd = ['svn', 'cleanup']
+            exitCode = subprocess.call(cmd) 
+        
+        # raise if call still failed
+        if exitCode != 0:
+            raise Exception("svn cleanup failed : " + svnWC)
     finally:
         os.chdir(pwd)
 
