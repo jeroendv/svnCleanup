@@ -22,6 +22,13 @@ def test_svncleanupModuleInvocation(tmpdir):
 
     # verify that log file is created
     assert os.path.isfile('svnCleanup.log')
+    # there should be 2 lines  in the log
+    # header time line & totals line & empty newline
+    f = open('svnCleanup.log','rt')
+    lines = f.readlines()
+    assert 3 == len(lines)
+    
+    assert lines[-1] == '\n'
 
 def test_svncleanupModuleInvocation2(tmpdir):
     tmpdir = str(tmpdir)
@@ -38,4 +45,11 @@ def test_svncleanupModuleInvocation2(tmpdir):
 
     # verify that log file is created
     assert os.path.isfile('svnCleanup.log')
+
+    # there should be 3 lines  in the log
+    # header time line, a single line for ./svnWc/ & totals line & empty newline
+    f = open('svnCleanup.log','rt')
+    lines = f.readlines()
+    assert 4 == len(lines)
+    assert lines[-1] == '\n'
 
