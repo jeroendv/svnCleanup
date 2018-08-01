@@ -12,6 +12,6 @@ install:
 script:
   - pip install -r test_requirements.txt
   - pytest -s -v
-  - pytest  -s coveralls -v --cov coveralls --cov-report term-missing
+  - pytest  -s -v --cov coveralls --cov-report term-missing
 after_success:
   coveralls
