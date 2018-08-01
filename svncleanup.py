@@ -128,11 +128,11 @@ def dir_size(start, follow_links=0, skip_errs=0):
 
 def humanReadableSize(byteSize):
     """Return human readable size string e.g. Gb, Mb, Kb, b """
-    if byteSize >= 1024**3:
+    if abs(byteSize) >= 1024**3:
         return '{:.1f}Gb'.format(byteSize / 1024 / 1024 / 1024)
-    elif byteSize >= 1024**2:
+    elif abs(byteSize) >= 1024**2:
         return '{:.1f}Mb'.format(byteSize / 1024 / 1024 )
-    elif byteSize >= 1024:
+    elif abs(byteSize) >= 1024:
         return '{:.1f}Kb'.format(byteSize / 1024  )
     else:
         return '{:.1f}b'.format(byteSize)
