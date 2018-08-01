@@ -11,4 +11,7 @@ install:
 # command to run tests
 script:
   - pip install -r test_requirements.txt
-  - pytest -v  -s # or py.test for Python versions 3.5 and below
+  - pytest -s -v
+  - pytest  -s coveralls -v --cov coveralls --cov-report term-missing
+after_success:
+  coveralls
