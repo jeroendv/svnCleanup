@@ -1,7 +1,7 @@
 test:
   script:
-    - apt-get update -qy
-    - apt-get install -y python-dev python-pip
+    - sudo apt-get update -qy
+    - sudo apt-get install -y python-dev python-pip
     - pip install -r requirements.txt
     - pip install -r test_requirements.txt
     - pytest  -s -v --cov --cov-report term-missing
