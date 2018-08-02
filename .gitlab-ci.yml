@@ -1,0 +1,6 @@
+test:
+  script:
+    - pip install -r requirements.txt
+    - pip install -r test_requirements.txt
+    - pytest  -s -v --cov --cov-report term-missing
+  coverage: '/\d+\%\s*$/'
