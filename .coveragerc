@@ -8,6 +8,8 @@ omit =
     home/*
     home/**
     home/
+    /home/
+    /home/*
     # test if aparticular file several folders deep will
     # be ignores using the following statement
     */compat.py
