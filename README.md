@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.com/jeroendv/svnCleanup.svg?branch=master)](https://travis-ci.com/jeroendv/svnCleanup)
 [![Coverage Status](https://coveralls.io/repos/github/jeroendv/svnCleanup/badge.svg?branch=master)](https://coveralls.io/github/jeroendv/svnCleanup?branch=master)
 
+[![pipeline status](http://PC-CI-2.mtrs.intl/JDVlieger/svnCleanup/badges/master/pipeline.svg)](http://PC-CI-2.mtrs.intl/JDVlieger/svnCleanup/commits/master)
+[![coverage report](http://PC-CI-2.mtrs.intl/JDVlieger/svnCleanup/badges/master/coverage.svg)](http://PC-CI-2.mtrs.intl/JDVlieger/svnCleanup/commits/master)
+
 # svnCleanup
 
 Free disk space by recursive finding all svn working copies in the current folder and clean them.
