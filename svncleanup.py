@@ -71,8 +71,16 @@ def CleanDirTree():
         ))
 
     ## log the total freed space as well
+    totalSize_before = 0+ sum([e.bytes_before for e in svnRepoSizes])
+    totalSize_after = 0+ sum([e.bytes_after for e in svnRepoSizes])
     totalFreedSpaceInBytes = 0 + sum([e.size_difference() for e in svnRepoSizes])
-    Log("total freed space: {}".format(humanReadableSize(totalFreedSpaceInBytes)))
+
+    Log("{:8} -> {:8} = {:8} {}".format(
+            humanReadableSize(totalSize_before),
+            humanReadableSize(totalSize_after),
+            humanReadableSize(totalFreedSpaceInBytes),
+            "TOTAL"
+        ))
     Log("")
 
 class SvnRepoSize:
