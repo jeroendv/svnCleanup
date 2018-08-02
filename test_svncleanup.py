@@ -36,7 +36,7 @@ def test_svncleanupModuleInvocation2(tmpdir):
 
     # create an svn repo and check it out
     subprocess.check_call('svnadmin create svnRepo', shell=True)
-    subprocess.check_call('svn checkout file://{}/svnRepo svnWc'.format(tmpdir), shell=True)
+    subprocess.check_call('svn checkout file:///{}/svnRepo svnWc'.format(tmpdir), shell=True)
 
     # set cli arg and invode script main
     # which should not raise
