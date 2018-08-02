@@ -8,3 +8,6 @@ omit =
     # note this project is build by travis-ci in
     # /home/travis/build/jeroendv/svnCleanup
     /home/travis/virtualenv/*
+    
+    #ignore gitlab-ci files
+    */.local/*
