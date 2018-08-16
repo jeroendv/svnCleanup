@@ -164,7 +164,7 @@ def cleanSvnWcRepo(svnWC):
             exitcode = e.returncode
             
         # fallback to regular cleanup if call failed
-        assert exitCode != 0
+        assert exitcode != 0
         try:
             cmd = ['svn', 'cleanup']
             subprocess.check_output(cmd)
