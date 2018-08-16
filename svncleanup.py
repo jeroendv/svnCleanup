@@ -59,7 +59,9 @@ def CleanDirTree():
             svnRepoSizes.append(SvnRepoSize(svnDir, byteSize_before, byteSize_after))
 
         # don't walk into ignored folders
-        dirs = filter(lambda e: e not in ignoredFolders, dirs)
+        for d in ignoredFolders:
+            if d in dirs:
+                dirs.remove(d)
 
     ## sort the data and print in order of freed up space
     for e in sorted(svnRepoSizes, key=SvnRepoSize.size_difference):
