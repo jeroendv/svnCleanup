@@ -158,7 +158,7 @@ def cleanSvnWcRepo(svnWC):
         exitcode = 0
         try:
             cmd = ['svn', 'cleanup', '--vacuum-pristines']
-            subprocess.check_call(cmd) 
+            subprocess.check_output(cmd) 
             return 
         except subprocess.CalledProcessError as e:
             exitcode = e.returncode
