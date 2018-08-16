@@ -155,19 +155,27 @@ def cleanSvnWcRepo(svnWC):
     pwd = os.getcwd()
     try:
         os.chdir(svnWC)
-        cmd = ['svn', 'cleanup', '--vacuum-pristines']
-        exitCode = subprocess.call(cmd) 
-
+        exitcode = 0
+        try:
+            cmd = ['svn', 'cleanup', '--vacuum-pristines']
+            subprocess.check_call(cmd) 
+            return 
+        except subprocess.CalledProcessError as e:
+            exitcode = e.returncode
+            
         # fallback to regular cleanup if call failed
-        if exitCode == 1:
+        assert exitCode != 0
+        try:
             cmd = ['svn', 'cleanup']
-            exitCode = subprocess.call(cmd) 
-        
-        # raise if call still failed
-        if exitCode != 0:
-            raise Exception("svn cleanup failed : " + svnWC)
+            subprocess.check_output(cmd)
+            return
+        except subprocess.CalledProcessError as e:
+            Log("svn cleanup failed : " + svnWC)          
+            raise e
     finally:
+        # always go back to original working directory
         os.chdir(pwd)
+
 
 
 
